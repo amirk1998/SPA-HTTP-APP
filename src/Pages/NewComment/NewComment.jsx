@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { addNewPost } from '../../services/addNewCommentService';
-import { getAllComments } from '../../services/getAllCommentService';
+import { useNavigate } from 'react-router-dom';
 
-const NewComment = ({ setComments }) => {
+const NewComment = () => {
   const [comment, setComment] = useState({
     name: '',
     email: '',
     content: '',
   });
+
+  let navigate = useNavigate();
 
   const changeHandler = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
@@ -17,8 +19,7 @@ const NewComment = ({ setComments }) => {
     event.preventDefault();
     try {
       await addNewPost({ ...comment, postId: 1 });
-      const { data } = await getAllComments();
-      setComments(data);
+      navigate('/');
     } catch (error) {
       console.log(error);
     }

@@ -1,7 +1,7 @@
-import Discussion from '../Container/Discussion/Discussion';
+import CommentsList from '../Components/Comments/CommentsList';
 
 const HomePage = () => {
-  return <Discussion />;
+  return <CommentsList />;
 };
 
 export default HomePage;

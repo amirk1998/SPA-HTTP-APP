@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import Comment from '../../Components/Comment/Comment';
-import FullComment from '../../Components/FullComment/FullComment';
-import NewComment from '../../Components/NewComment/NewComment';
+import Comment from './Comment/Comment';
 import { toast } from 'react-toastify';
 import { getAllComments } from '../../services/getAllCommentService';
 import { Link } from 'react-router-dom';
 
-const Discussion = () => {
+const CommentsList = () => {
   const [comments, setComments] = useState(null);
-  const [selectedID, setSelectedID] = useState(null);
   const [error, setError] = useState(false);
   //
   // useEffect(() => {
@@ -34,11 +31,6 @@ const Discussion = () => {
     };
     getComments();
   }, []);
-
-  const selectCommentHandler = (id) => {
-    console.log(id);
-    setSelectedID(id);
-  };
 
   const renderComments = () => {
     let renderValue = (
@@ -68,11 +60,7 @@ const Discussion = () => {
     if (comments && !error) {
       renderValue = comments.map((c) => (
         <Link to={`/comment/${c.id}`} key={c.id}>
-          <Comment
-            name={c.name}
-            email={c.email}
-            onClick={() => selectCommentHandler(c.id)}
-          />
+          <Comment name={c.name} email={c.email} />
         </Link>
       ));
     }
@@ -91,22 +79,10 @@ const Discussion = () => {
   // };
 
   return (
-    <>
-      <section className='grid grid-cols-3 auto-rows-max items-center justify-center gap-x-20 gap-y-10 w-full border-2 border-gray-400 rounded-lg p-4 my-4  '>
-        {renderComments()}
-      </section>
-      {/* <section className='flex items-center justify-center w-full border-2 border-gray-400 rounded-lg p-4 my-4 '>
-        <FullComment
-          commentID={selectedID}
-          setComments={setComments}
-          setSelectedID={setSelectedID}
-        />
-      </section> */}
-      {/* <section className='flex items-center justify-center w-full border-2 border-gray-400 rounded-lg p-4 my-4 '>
-        <NewComment setComments={setComments} />
-      </section> */}
-    </>
+    <section className='grid grid-cols-3 auto-rows-max items-center justify-center gap-x-20 gap-y-10 w-full border-2 border-gray-400 rounded-lg p-4 my-4  '>
+      {renderComments()}
+    </section>
   );
 };
 
-export default Discussion;
+export default CommentsList;
